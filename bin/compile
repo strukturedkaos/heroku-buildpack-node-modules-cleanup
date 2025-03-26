@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+
 # bin/compile BUILD_DIR CACHE_DIR ENV_DIR
 
 BUILD_DIR=$1
 
-echo "-----> Deleting the node_modules directory"
-find $BUILD_DIR -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \;
+echo "-----> Deleting the node_modules directory (excluding .heroku)"
+
+# Find and remove node_modules directories except those under .heroku
+find $BUILD_DIR -name 'node_modules' -type d -not -path "$BUILD_DIR/.heroku/*" -prune -print -exec rm -rf '{}' \;
